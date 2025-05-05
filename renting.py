@@ -218,9 +218,9 @@ def grid_search_buying_diff(param_ranges=None, **kwargs):
 
     for i, combination in enumerate(param_combinations):
         kwargs.update({param_name: value for param_name, value in zip(param_ranges.keys(), combination)})
-        index = tuple(np.searchsorted(param_values[param_name], value) 
+        index = tuple(np.searchsorted(param_values[param_name], value)
                       for param_name, value in zip(param_ranges.keys(), combination))
-        results[index] = get_buying_diff(**kwargs) 
+        results[index] = get_buying_diff(**kwargs)
 
     return {"results": results, "param_values": param_values}
 

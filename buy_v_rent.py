@@ -138,8 +138,12 @@ def get_data(total_years=45,
     df['net_worth_renting'] =  df['cumulative_invested_renting']
 
     CAPITAL_GAINS_TAX_RATE = .15
-    df['effective_net_worth_renting'] = df['net_worth_renting'] * (1-CAPITAL_GAINS_TAX_RATE)
+    # not all of investments would be subject to capital gains tax, but in a world where buy v renting doesnt affect maxing out retirement
+    # accounts this is a reasonable assumption i think
+    df['capital_gains_tax'] = df['net_worth_renting'] * (CAPITAL_GAINS_TAX_RATE)
+    df['effective_net_worth_renting'] = df['net_worth_renting'] - df['capital_gains_tax']
     REALTOR_COST = .06 # percent
-    df['effective_net_worth_with_home'] = df['net_worth_with_home'] * (1-REALTOR_COST)
+    df['realtor_fees_if_selling'] = df['net_worth_with_home'] * (REALTOR_COST)
+    df['effective_net_worth_with_home'] = df['net_worth_with_home'] - df['realtor_fees_if_selling']
 
     return df
